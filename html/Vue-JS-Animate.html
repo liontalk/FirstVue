@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue中同时使用JS来实现动画和过渡</title>
+    <script src="../js/vue.js"></script>
+    <link type="text/css" rel="stylesheet" href="../css/animate.css">
+
+    <style>
+
+        /*
+        appear 表示第一次出现的时候增加样式
+        增加了过渡动画效果
+        */
+
+    </style>
+</head>
+<body>
+<div id="app">
+
+
+    <transition name="fade"
+                @before-enter="handlerBeforeEnter"
+                @enter="handlerEnter"
+                @after-enter="handlerAfterEnter"
+    >
+        <div v-if="show">
+            Hello World
+        </div>
+    </transition>
+    <button @click="showData">点击</button>
+</div>
+
+
+<script>
+
+    var vue = new Vue({
+        el: "#app",
+        data: {
+            show: true
+        },
+        methods: {
+            showData: function () {
+                this.show = !this.show;
+            },
+            handlerBeforeEnter: function (el) {
+                el.style.color = "red"
+                console.log(el);
+                console.log("handlerBeforeEnter");
+            },
+            handlerEnter: function (el, done) {
+                console.log(el);
+                console.log("handlerEnter");
+                setTimeout(() => {
+                    el.style.color = "green"
+                }, 5000),
+                    setTimeout(() => {
+                        el.style.color = "pink"
+                        //告诉vue,我的动画已经执行完了
+                        //调用完之后，再次调用after-enter
+                        done()
+                    }, 4000)
+            },
+            handlerAfterEnter: function (el) {
+                console.log("=======handlerAfterEnter");
+                el.style.color = "yellow"
+
+            }
+        }
+
+
+    });
+
+
+</script>
+</body>
+</html>
