@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue 中动画封装</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+
+    <fade :show="show">
+        <div>Hello World!</div>
+    </fade>
+
+
+    <fade :show="show">
+        <h1>Hello World!</h1>
+    </fade>
+
+
+    <button @click="showChange">点击</button>
+
+</div>
+
+<script>
+
+    Vue.component('fade', {
+        props: ['show'],
+        template: `
+                <transition @before-enter="handleBeforeShow"
+                            @after-enter="handleAfterShow"
+                            >
+                <slot v-if="show"></slot>
+                </transition>
+        `
+        ,
+        methods: {
+            handleBeforeShow: function (el) {
+                setTimeout(() => {
+                    el.style.color = "red"
+                }, 2000)
+            },
+            handleAfterShow: function (el, done) {
+                setTimeout(() => {
+                    el.style.color = "green",
+                        done()
+                }, 5000)
+            }
+        }
+    });
+
+    var app = new Vue({
+        el: "#app",
+        data: {
+            show: true
+        },
+        methods: {
+            showChange: function () {
+                this.show = !this.show
+            }
+        }
+
+
+    });
+
+</script>
+
+</body>
+</html>
