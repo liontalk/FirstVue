@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue中的列表过渡</title>
+    <script src="../js/vue.js"></script>
+    <link type="text/css" rel="stylesheet" href="../css/animate.css">
+
+    <style>
+
+        /*
+        appear 表示第一次出现的时候增加样式
+        增加了过渡动画效果
+        */
+        .fade-enter,
+        .fade-leave-to {
+            opacity: 0;
+        }
+        .fade-enter-active,
+        .fade-leave-active {
+            transition: opacity 1s
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+
+    <transition-group name="fade">
+        <div v-for="item of list" :key="item.id">{{item.text}} ---- {{item.id}}</div>
+    </transition-group>
+
+
+    <button @click="add">增加</button>
+</div>
+
+
+<script>
+    var count = 0;
+    var vue = new Vue({
+        el: "#app",
+        data: {
+            list: [],
+        },
+        methods: {
+            add: function () {
+                this.list.push({
+                    id: count++,
+                    text: "Hello World!"
+                });
+            }
+        }
+
+
+    });
+
+
+</script>
+</body>
+</html>
