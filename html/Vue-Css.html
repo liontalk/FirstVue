@@ -4,30 +4,39 @@
     <meta charset="UTF-8">
     <title>Vue中Css动画原理</title>
     <script src="../js/vue.js"></script>
+    <link type="text/css" rel="stylesheet" href="../css/animate.css">
 
     <style>
-        .fade-enter {
-            opacity: 0.5;
-        }
 
-        .fade-enter-active {
-            transition: opacity 3s;
-        }
+        /*
+        Vue自带的中JS代码中实现的Css样式
 
-        .fade-leave {
-            opacity: 0.5;
-        }
+         .fade-enter {
+             opacity: 0.5;
+         }
 
-        .fade-leave-active {
-            transition: opacity 3s;
-        }
+         .fade-enter-active {
+             transition: opacity 3s;
+         }
+
+         .fade-leave {
+             opacity: 0.5;
+         }
+
+         .fade-leave-active {
+             transition: opacity 3s;
+         }*/
     </style>
 </head>
 <body>
 <div id="app">
 
-    <transition name="fade">
-        <div v-if="show">Hello World</div>
+    <transition name="fade"
+                enter-active-class="animated swing"
+                leave-active-class="animated shake">
+        <div v-if="show">
+            Hello World
+        </div>
     </transition>
 
 
